@@ -1,5 +1,7 @@
 # *Deep Learning for Physical Processes: Integrating Prior Scientific Knowledge:* Pytorch Implementation
 
+![alt text](images/model.png)
+
 ## To get going:
 Clone repository with submodules: ``` git clone --recursive https://github.com/emited/flow```
 
