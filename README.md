@@ -9,4 +9,4 @@ Download the data [here](http://marine.copernicus.eu/services-portfolio/access-t
 ## Results
 
 
-**Note**: This implementation currently uses bilinear interpolation for warping. The gaussian warping scheme will be integrated shortly into pytorch.
+**Note**: This implementation currently uses bilinear interpolation for warping. The gaussian warping scheme will be integrated shortly into pytorch. Take a look at the pull request [here](https://github.com/pytorch/pytorch/pull/5487) for a status update.
