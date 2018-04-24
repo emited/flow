@@ -54,11 +54,11 @@ parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
                     help='momentum for sgd, alpha parameter for adam')
 parser.add_argument('--beta', default=0.999, type=float, metavar='M',
                     help='beta parameters for adam')
-parser.add_argument('--smooth-coef', default=0, type=float,
+parser.add_argument('--smooth-coef', default=0.4, type=float,
                     help='coefficient associated to smoothness loss in cost function')
-parser.add_argument('--div-coef', default=0, type=float,
+parser.add_argument('--div-coef', default=1, type=float,
                     help='coefficient associated to divergence loss in cost function')
-parser.add_argument('--magn-coef', default=0, type=float,
+parser.add_argument('--magn-coef', default=-0.003, type=float,
                     help='coefficient associated to magnitude loss in cost function')
 parser.add_argument('--epochs', default=500, type=int, metavar='N',
                     help='number of total epochs to run (default: 300')
@@ -71,7 +71,7 @@ parser.add_argument('--no-cuda',  action='store_true',
 
 args = parser.parse_args()
 
-viz = visdom.Visdom(server='http://132.227.204.175', env=args.env)
+viz = visdom.Visdom(env=args.env)
 
 def main():
     global args, viz
