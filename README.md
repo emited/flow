@@ -1,5 +1,7 @@
 # *Deep Learning for Physical Processes: Integrating Prior Scientific Knowledge:* Pytorch Implementation
 
+Official Pytorch implementation of ICLR 2018 [paper](https://openreview.net/pdf?id=By4HsfWAZ).
+
 ![alt text](images/model.png)
 
 ## To get going:
@@ -11,4 +13,4 @@ Download the data [here](http://marine.copernicus.eu/services-portfolio/access-t
 ## Results
 
 
-**Note**: This implementation currently uses bilinear interpolation for warping. The gaussian warping scheme will be integrated shortly into pytorch. Take a look at the pull request [here](https://github.com/pytorch/pytorch/pull/5487) for a status update.
+**Note**: By defalt, this implementation currently uses bilinear interpolation for warping. This scheme works well for modeling purely advective processes. For advective and diffusive processes, a gaussian warping scheme can be used (flow/modules/warps/GaussianWarpingScheme). The gaussian warping scheme will be integrated shortly into pytorch. Take a look at the pull request [here](https://github.com/pytorch/pytorch/pull/5487) for a status update. While waiting, it is possible to build pytorch from a forked version available [here](https://github.com/pajotarthur/pytorch).
