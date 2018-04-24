@@ -1,6 +1,6 @@
-# *Deep Learning for Physical Processes: Integrating Prior Scientific Knowledge:* Pytorch Implementation
+# *Deep Learning for Physical Processes: Integrating Prior Scientific Knowledge:*
 
-Official Pytorch implementation of ICLR 2018 [paper](https://openreview.net/pdf?id=By4HsfWAZ).
+Official Pytorch implementation of ICLR 2018 paper [Deep Learning for Physical Processes: Integrating Prior Scientific Knowledge](https://openreview.net/pdf?id=By4HsfWAZ).
 
 ![alt text](images/model.png)
 
