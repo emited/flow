@@ -64,9 +64,11 @@ class SSTSeq(torch.utils.data.Dataset):
                 _normalize_thetao_with_daily_stats(zdata)
 
             if rescale_method == 'norm':
+                print('=> norm rescale zone {}'.format(zone))
                 _normalize_thetao(zdata)
 
             elif rescale_method == 'minmax':
+                print('=> minmax rescale zone {}'.format(zone))
                 _rescale_thetao(zdata)
 
 

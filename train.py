@@ -48,10 +48,10 @@ parser.add_argument('--warp', default='BilinearWarpingScheme', choices=warp_name
                     help='choose warping scheme to use:' + ' | '.join(warp_names))
 parser.add_argument('--upsample', default='bilinear', choices=('deconv', 'nearest', 'bilinear'),
                     help='choose from (deconv, nearest, bilinear)')
-parser.add_argument('--lr', '--learning-rate', default=0.0001, type=float,
+parser.add_argument('--lr', '--learning-rate', default=1e-4, type=float,
                     metavar='LR', help='initial learning rate')
 parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
-                    help='momentum for sgd, alpha parameter for adam')
+                    help='alpha parameter for adam')
 parser.add_argument('--beta', default=0.999, type=float, metavar='M',
                     help='beta parameters for adam')
 parser.add_argument('--smooth-coef', default=0.4, type=float,
