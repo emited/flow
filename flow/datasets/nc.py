@@ -27,6 +27,13 @@ def _rescale_thetao(zdata):
     zdata['daily_mean'] = zdata['daily_mean'] + zdata['daily_std'] * vmin
     zdata['daily_std'] = zdata['daily_std'] * (vmax - vmin)
 
+def _normalize_uo_vo(zdata):
+    # print('nromalizing ')
+    norm = (np.abs(zdata['uo']) + np.abs(zdata['vo'])).mean(axis=2).mean(axis=1)
+    zdata['uo'] = zdata['uo'] / norm.reshape(-1, 1, 1)
+    zdata['vo'] = zdata['vo'] / norm.reshape(-1, 1, 1)
+    zdata['uv_norm'] = norm
+
 
 class SSTSeq(torch.utils.data.Dataset):
 
@@ -36,6 +43,7 @@ class SSTSeq(torch.utils.data.Dataset):
                  rescale_method=None,
                  transform=None, target_transform=None, 
                  co_transform=None,
+                 normalize_uv=True,
                  zones=None):
 
         if zones is None:  # using all zones
@@ -71,21 +79,35 @@ class SSTSeq(torch.utils.data.Dataset):
                 print('=> minmax rescale zone {}'.format(zone))
                 _rescale_thetao(zdata)
 
+            if normalize_uv:
+                print('normalizing uv !')
+                _normalize_uo_vo(zdata)
+            for var in ['thetao', 'uo', 'vo']:
+                zdata[var] = zdata[var][time_slice]
 
             self.data[zone] = zdata
-
-        self.num_single = self.data[zones[0]]['thetao'][time_slice].shape[0] - seq_len - target_seq_len - 1
+        # print(time_slice)
+        # print(f'num days: {len(self.data[self.zones[0]]["thetao"])}')
+        self.num_single = self.data[zones[0]]['thetao'].shape[0] - seq_len - target_seq_len + 1
         self.num = self.num_single * len(zones)
 
+        print(f'size: {len(self)} num days: {len(self.data[self.zones[0]]["thetao"])}')
+
     def __getitem__(self, index):
-        zone = self.zones[index // (self.num_single - 1)]
-        sample_num = index % (self.num_single - 1)
+        zone = self.zones[index // self.num_single]# - 1)]
+        # sample_num = index % (self.num_single - 1)
+        sample_num = index % self.num_single
         zdata = self.data[zone]
 
         input = zdata['thetao'][sample_num: sample_num + self.seq_len]
         target = zdata['thetao'][sample_num + self.seq_len: sample_num + self.seq_len + self.target_seq_len]
-
-        return input, target
+        uo_target = zdata['uo'][sample_num + self.seq_len: sample_num + self.seq_len + self.target_seq_len]
+        vo_target = zdata['vo'][sample_num + self.seq_len: sample_num + self.seq_len + self.target_seq_len]
+        w_target = np.concatenate([np.expand_dims(uo_target, 1), np.expand_dims(vo_target, 1)], 1)
+        # print('zdata', zdata['uo'].shape, zdata['vo'].shape, 'w_targer', w_target.shape, np.expand_dims(uo_target, 1).shape)
+        # exit()
+        # 
+        return input, target, w_target
 
     def __len__(self):
-        return self.num - len(self.zones)
+        return self.num # - len(self.zones)

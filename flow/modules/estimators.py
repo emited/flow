@@ -9,13 +9,16 @@ def conv(batch_norm, in_planes, out_planes, kernel_size=3, stride=1):
             nn.Conv2d(in_planes, out_planes, kernel_size=kernel_size,
                       stride=stride, padding=(kernel_size - 1) // 2, bias=False),
             nn.BatchNorm2d(out_planes),
-            nn.LeakyReLU(0.1, inplace=True)
+            nn.ReLU(inplace=True)
+            # nn.LeakyReLU(0.1, inplace=True)
         )
     else:
         return nn.Sequential(
             nn.Conv2d(in_planes, out_planes, kernel_size=kernel_size,
                       stride=stride, padding=(kernel_size - 1) // 2, bias=True),
-            nn.LeakyReLU(0.1, inplace=True)
+            # nn.LeakyReLU(0.1, inplace=True)
+            nn.ReLU(inplace=True)
+
         )
 
 
@@ -23,8 +26,9 @@ def soft_deconv(in_planes, out_planes, upsample_mode='bilinear'):
     return nn.Sequential(
         nn.Upsample(scale_factor=2, mode=upsample_mode),
         nn.Conv2d(in_planes, out_planes, kernel_size=3,
-                  stride=1, padding=1, bias=True), # TURN OFF BIAS??
-        nn.LeakyReLU(0.1, inplace=True)
+                  stride=1, padding=1, bias=False), # TURN OFF BIAS??
+        nn.ReLU(inplace=True)
+        # nn.LeakyReLU(0.1, inplace=True)
     )
 
 

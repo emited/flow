@@ -21,7 +21,7 @@ class AverageMeter(object):
         self.avg = self.sum / self.count
 
     def __repr__(self):
-        return '{:.5f} ({:.5f})'.format(self.val, self.avg)
+        return '{:.10f} ({:.10f})'.format(self.val, self.avg)
 
 
 class AverageMeters(object):
